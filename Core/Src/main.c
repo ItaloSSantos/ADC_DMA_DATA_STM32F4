@@ -8,7 +8,7 @@ UART_HandleTypeDef huart2;
 DMA_HandleTypeDef hdma_usart2_tx;
 DMA_HandleTypeDef hdma_usart2_rx;
 
-uint16_t adcBuffer[2];
+uint16_t adcBuffer[2] = {0};  // Inicializa ambos com 0
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
@@ -29,7 +29,7 @@ int main(void)
 
   while (1)
   {
-	  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adcBuffer, 2);
+
   }
 
 }
