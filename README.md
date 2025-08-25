@@ -9,3 +9,7 @@ hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
 ```
 
 This configuration ensures the ADC operates at 21MHz (84MHz / 4), which is within the specified limits for reliable operation.
+
+Outra configuração relevante é o tempo de amostragem, para sinais lentos deve-se melhorar a precisão mantendo um maior tempo de amostragem: 
+sConfig.SamplingTime = ADC_SAMPLETIME_144CYCLES;   
+Como o clock do ADC é de 21MHz, o tempo de amostragem ficará próximo a 7us. 
