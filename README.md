@@ -13,3 +13,5 @@ Outra configuração relevante é o tempo de amostragem. Para sinais lentos deve
 sConfig.SamplingTime = ADC_SAMPLETIME_144CYCLES;
 ```  
 Como o clock do ADC é de 21MHz, o tempo de amostragem ficará próximo a 7us. 
+
+

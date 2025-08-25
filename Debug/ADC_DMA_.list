@@ -39,15 +39,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  17 .debug_macro  00020b2c  00000000  00000000  00011e80  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   0000a9bb  00000000  00000000  000329ac  2**0
+ 18 .debug_line   0000a9b8  00000000  00000000  000329ac  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    000cbcb1  00000000  00000000  0003d367  2**0
+ 19 .debug_str    000cbcb1  00000000  00000000  0003d364  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .comment      00000043  00000000  00000000  00109018  2**0
+ 20 .comment      00000043  00000000  00000000  00109015  2**0
                   CONTENTS, READONLY
- 21 .debug_frame  000021fc  00000000  00000000  0010905c  2**2
+ 21 .debug_frame  000021fc  00000000  00000000  00109058  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 22 .debug_line_str 00000043  00000000  00000000  0010b258  2**0
+ 22 .debug_line_str 00000043  00000000  00000000  0010b254  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -372,33 +372,18 @@ Disassembly of section .text:
  80004f2:	bf00      	nop
 
 080004f4 <main>:
-/**
-  * @brief  The application entry point.
-  * @retval int
-  */
+static void MX_DMA_Init(void);
+static void MX_ADC1_Init(void);
+static void MX_USART2_UART_Init(void);
+
 int main(void)
 {
  80004f4:	b580      	push	{r7, lr}
  80004f6:	af00      	add	r7, sp, #0
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
  80004f8:	f000 fb6a 	bl	8000bd0 <HAL_Init>
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-
-  /* Configure the system clock */
   SystemClock_Config();
  80004fc:	f000 f80a 	bl	8000514 <SystemClock_Config>
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
-
-  /* Initialize all configured peripherals */
   MX_GPIO_Init();
  8000500:	f000 f93c 	bl	800077c <MX_GPIO_Init>
   MX_DMA_Init();
@@ -408,19 +393,15 @@ int main(void)
   MX_USART2_UART_Init();
  800050c:	f000 f8ce 	bl	80006ac <MX_USART2_UART_Init>
 
-  /* USER CODE END 2 */
-
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
   while (1)
  8000510:	bf00      	nop
  8000512:	e7fd      	b.n	8000510 <main+0x1c>
 
 08000514 <SystemClock_Config>:
-/**
-  * @brief System Clock Configuration
-  * @retval None
-  */
+
+}
+
+
 void SystemClock_Config(void)
 {
  8000514:	b580      	push	{r7, lr}
@@ -441,8 +422,6 @@ void SystemClock_Config(void)
  8000534:	60da      	str	r2, [r3, #12]
  8000536:	611a      	str	r2, [r3, #16]
 
-  /** Configure the main internal regulator output voltage
-  */
   __HAL_RCC_PWR_CLK_ENABLE();
  8000538:	2300      	movs	r3, #0
  800053a:	60bb      	str	r3, [r7, #8]
@@ -470,9 +449,7 @@ void SystemClock_Config(void)
  800056c:	607b      	str	r3, [r7, #4]
  800056e:	687b      	ldr	r3, [r7, #4]
 
-  /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
+
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
  8000570:	2301      	movs	r3, #1
  8000572:	623b      	str	r3, [r7, #32]
@@ -509,8 +486,6 @@ void SystemClock_Config(void)
  80005a4:	f000 f912 	bl	80007cc <Error_Handler>
   }
 
-  /** Initializes the CPU, AHB and APB buses clocks
-  */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
  80005a8:	230f      	movs	r3, #15
  80005aa:	60fb      	str	r3, [r7, #12]
@@ -550,10 +525,7 @@ void SystemClock_Config(void)
  80005e4:	40007000 	.word	0x40007000
 
 080005e8 <MX_ADC1_Init>:
-  * @brief ADC1 Initialization Function
-  * @param None
-  * @retval None
-  */
+
 static void MX_ADC1_Init(void)
 {
  80005e8:	b580      	push	{r7, lr}
@@ -631,7 +603,7 @@ static void MX_ADC1_Init(void)
  8000654:	f000 f8ba 	bl	80007cc <Error_Handler>
   }
 
-  /*ordem de leitura e tempo de amostragem*/
+
   sConfig.Channel = ADC_CHANNEL_0;
  8000658:	2300      	movs	r3, #0
  800065a:	603b      	str	r3, [r7, #0]
@@ -736,9 +708,6 @@ static void MX_USART2_UART_Init(void)
     Error_Handler();
  80006ee:	f000 f86d 	bl	80007cc <Error_Handler>
   }
-  /* USER CODE BEGIN USART2_Init 2 */
-
-  /* USER CODE END USART2_Init 2 */
 
 }
  80006f2:	bf00      	nop
@@ -749,16 +718,12 @@ static void MX_USART2_UART_Init(void)
 
 08000700 <MX_DMA_Init>:
 
-/**
-  * Enable DMA controller clock
-  */
 static void MX_DMA_Init(void)
 {
  8000700:	b580      	push	{r7, lr}
  8000702:	b082      	sub	sp, #8
  8000704:	af00      	add	r7, sp, #0
 
-  /* DMA controller clock enable */
   __HAL_RCC_DMA2_CLK_ENABLE();
  8000706:	2300      	movs	r3, #0
  8000708:	607b      	str	r3, [r7, #4]
@@ -786,8 +751,6 @@ static void MX_DMA_Init(void)
  800073a:	603b      	str	r3, [r7, #0]
  800073c:	683b      	ldr	r3, [r7, #0]
 
-  /* DMA interrupt init */
-  /* DMA1_Stream5_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Stream5_IRQn, 0, 0);
  800073e:	2200      	movs	r2, #0
  8000740:	2100      	movs	r1, #0
@@ -796,7 +759,6 @@ static void MX_DMA_Init(void)
   HAL_NVIC_EnableIRQ(DMA1_Stream5_IRQn);
  8000748:	2010      	movs	r0, #16
  800074a:	f000 ff44 	bl	80015d6 <HAL_NVIC_EnableIRQ>
-  /* DMA1_Stream6_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Stream6_IRQn, 0, 0);
  800074e:	2200      	movs	r2, #0
  8000750:	2100      	movs	r1, #0
@@ -805,7 +767,6 @@ static void MX_DMA_Init(void)
   HAL_NVIC_EnableIRQ(DMA1_Stream6_IRQn);
  8000758:	2011      	movs	r0, #17
  800075a:	f000 ff3c 	bl	80015d6 <HAL_NVIC_EnableIRQ>
-  /* DMA2_Stream4_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA2_Stream4_IRQn, 0, 0);
  800075e:	2200      	movs	r2, #0
  8000760:	2100      	movs	r1, #0
@@ -824,20 +785,13 @@ static void MX_DMA_Init(void)
  8000778:	40023800 	.word	0x40023800
 
 0800077c <MX_GPIO_Init>:
-  * @brief GPIO Initialization Function
-  * @param None
-  * @retval None
-  */
+
 static void MX_GPIO_Init(void)
 {
  800077c:	b480      	push	{r7}
  800077e:	b083      	sub	sp, #12
  8000780:	af00      	add	r7, sp, #0
-  /* USER CODE BEGIN MX_GPIO_Init_1 */
 
-  /* USER CODE END MX_GPIO_Init_1 */
-
-  /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOH_CLK_ENABLE();
  8000782:	2300      	movs	r3, #0
  8000784:	607b      	str	r3, [r7, #4]
@@ -865,9 +819,6 @@ static void MX_GPIO_Init(void)
  80007b6:	603b      	str	r3, [r7, #0]
  80007b8:	683b      	ldr	r3, [r7, #0]
 
-  /* USER CODE BEGIN MX_GPIO_Init_2 */
-
-  /* USER CODE END MX_GPIO_Init_2 */
 }
  80007ba:	bf00      	nop
  80007bc:	370c      	adds	r7, #12
@@ -878,10 +829,7 @@ static void MX_GPIO_Init(void)
  80007c8:	40023800 	.word	0x40023800
 
 080007cc <Error_Handler>:
-/**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
+
 void Error_Handler(void)
 {
  80007cc:	b480      	push	{r7}
@@ -895,8 +843,7 @@ __STATIC_FORCEINLINE void __disable_irq(void)
  80007d0:	b672      	cpsid	i
 }
  80007d2:	bf00      	nop
-  /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
+
   __disable_irq();
   while (1)
  80007d4:	bf00      	nop

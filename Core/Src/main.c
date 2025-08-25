@@ -8,6 +8,8 @@ UART_HandleTypeDef huart2;
 DMA_HandleTypeDef hdma_usart2_tx;
 DMA_HandleTypeDef hdma_usart2_rx;
 
+uint16_t adcBuffer[2];
+
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
@@ -23,10 +25,11 @@ int main(void)
   MX_DMA_Init();
   MX_ADC1_Init();
   MX_USART2_UART_Init();
+  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adcBuffer, 2);
 
   while (1)
   {
-
+	  HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adcBuffer, 2);
   }
 
 }
