@@ -28,7 +28,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
-
+extern uint16_t adcBuffer[2];
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 

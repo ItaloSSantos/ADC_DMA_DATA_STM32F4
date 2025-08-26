@@ -1,9 +1,9 @@
 #include "USART_Com.h"
 
 #define BUFFER_SIZE 64  // Define o tamanho do buffer
-#define rx_SIZE 8  // Define o tamanho do buffer
+#define RX_SIZE 8  // Define o tamanho do buffer
 UART_HandleTypeDef huart2;  // struct para uart2
-uint8_t rxData[rx_SIZE] = {0};   //
+uint8_t rxData[RX_SIZE] = {0};   //
 
 // Declara a estrutura do RingBuffer
 typedef struct {
@@ -45,10 +45,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     //RingBuffer_Write(&rxBufferUart2, rxData);
 
     // Ecoa o caractere recebido (usa a variável rxData)
-    HAL_UART_Transmit_IT(&huart2, &rxData, rx_SIZE);
+    HAL_UART_Transmit_IT(&huart2, rxData, RX_SIZE);
 
     // Reinicia a recepção via interrupt
-    HAL_UART_Receive_IT(&huart2, &rxData, rx_SIZE);
+    HAL_UART_Receive_IT(&huart2, rxData, RX_SIZE);
   }
 }
 
@@ -76,5 +76,5 @@ void Liga_Usart2(void)
 {
   MX_USART2_UART_Init();
   // Recebe para a variável temporária rxData
-  HAL_UART_Receive_IT(&huart2, &rxData, 1);
+  HAL_UART_Receive_IT(&huart2, rxData, RX_SIZE);
 }

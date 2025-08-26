@@ -22,3 +22,21 @@ O start inicia com a função da biblioteca HAL:
 ```c
 HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adcBuffer, 2);
 ``` 
+# Resultados 
+
+## ADC-DMA 
+Com essas configurações e as bibliotecas HAL, o ADC realizará a leitura e o DMA fará o salvamento na variável: 
+```c
+uint16_t adcBuffer[2] = {0}; 
+``` 
+que foi criada no main.c
+
+## UART para leitura
+
+Através da biblioteca USART_Com ocorrer o tratamento dos callback advindos das funções HAL, que por sua vez 
+viabilizam o tratamento das interrupções da USART2. Sendo necessário somente implementar a lógica para ler o ADC
+e retornar o valor do adcBuffer.
+```c
+uint16_t adcBuffer[2] = {0}; 
+``` 
+que foi criada no main.c
