@@ -1,6 +1,6 @@
 # ADC DMA Configuration for STM32F407 using HAL libraries
 
-O DMA no STM32F407 é conectado ao APB2 BUS, que tem o clock de 84MHz para a configuração de clock so sistema de 168MHz.
+O DMA no STM32F407 é conectado ao APB2 BUS, cujo clock é de 84MHz quando a configuração de clock do sistema de 168MHz.
 
 Como o clock do ADC pelo datasheet não pode ultrapassar 36MHz, o prescaler é selecionado para 4:
 
@@ -25,7 +25,7 @@ HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adcBuffer, 2);
 # Resultados 
 
 ## ADC-DMA 
-Com essas configurações e as bibliotecas HAL, o ADC realizará a leitura e o DMA fará o salvamento na variável: 
+Por meio das configurações das bibliotecas HAL, o ADC realizará a leitura e o DMA fará o salvamento na variável: 
 ```c
 uint16_t adcBuffer[2] = {0}; 
 ``` 
@@ -33,10 +33,9 @@ que foi criada no main.c
 
 ## UART para leitura
 
-Através da biblioteca USART_Com ocorrer o tratamento dos callback advindos das funções HAL, que por sua vez 
+Através da biblioteca USART_Com ocorre o tratamento das callback advindas das funções HAL, que por sua vez 
 viabilizam o tratamento das interrupções da USART2. Sendo necessário somente implementar a lógica para ler o ADC
 e retornar o valor do adcBuffer.
 ```c
 uint16_t adcBuffer[2] = {0}; 
 ``` 
-que foi criada no main.c
