@@ -1,9 +1,16 @@
 #include "USART_Com.h"
+#include <string.h>
+#include <stdio.h>
 
 #define BUFFER_SIZE 64  // Define o tamanho do buffer
-#define RX_SIZE 8  // Define o tamanho do buffer
-UART_HandleTypeDef huart2;  // struct para uart2
-uint8_t rxData[RX_SIZE] = {0};   //
+#define RX_SIZE 32  // Define o tamanho do buffer
+
+
+char rxData[RX_SIZE] = {0};  //variável para conversa pelo hyperterminal
+const char comando_adc[] = "LER_ADC"; // para que compare e retorne o valor do ADC
+
+
+UART_HandleTypeDef huart2;  //struct de config da UART2
 
 // Declara a estrutura do RingBuffer
 typedef struct {
@@ -41,17 +48,25 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
   if (huart->Instance == USART2)
   {
-    // Salva o dado recebido no buffer
-    //RingBuffer_Write(&rxBufferUart2, rxData);
+    // Verifica se recebeu o comando
+    if(strcmp(rxData, comando_adc) == 0) {
+        // Envia valores ADC já formatado
+        char response[32];
+        snprintf(response, sizeof(response), "ADC0:%d,ADC1:%d\r\n",
+                 adcBuffer[0], adcBuffer[1]);
+        HAL_UART_Transmit_IT(&huart2, (uint8_t*)response, strlen(response));
+    }
+    else {
+        // retorna erro
+        const char *error = "Comando invalido\r\n";
+        HAL_UART_Transmit_IT(&huart2, (uint8_t*)error, strlen(error));
+    }
 
-    // Ecoa o caractere recebido (usa a variável rxData)
-    HAL_UART_Transmit_IT(&huart2, rxData, RX_SIZE);
-
-    // Reinicia a recepção via interrupt
-    HAL_UART_Receive_IT(&huart2, rxData, RX_SIZE);
+    // Limpa buffer e reinicia recepção
+    memset(rxData, 0, RX_SIZE);
+    HAL_UART_Receive_IT(&huart2, (uint8_t*)rxData, RX_SIZE - 1); // -1 para segurança
   }
 }
-
 /*-----------------Configuração da USART----------------------*/
 
 static void MX_USART2_UART_Init(void)
@@ -76,5 +91,5 @@ void Liga_Usart2(void)
 {
   MX_USART2_UART_Init();
   // Recebe para a variável temporária rxData
-  HAL_UART_Receive_IT(&huart2, rxData, RX_SIZE);
+  HAL_UART_Receive_IT(&huart2, (uint8_t*)rxData, RX_SIZE);
 }
