@@ -12,7 +12,24 @@ O tempo de amostragem influencia a precisão. Para sinais lentos, recomenda-se m
 sConfig.SamplingTime = ADC_SAMPLETIME_144CYCLES;
 ```
 
-Valores armazenados em:
+O valores lidos pelo ADC são armazenado por DMA na seguinte variável:
 ```c
 uint16_t adcBuffer[2] = {0};
 ```
+
+##Leitura via UART
+
+A UART2 recebe comandos e responde com os valores do ADC.
+
+Comando válido:
+```nginx
+LER_ADC
+```
+```makefile
+ADC0:1234,ADC1:5678
+```
+Comando Inválido:
+
+```nginx
+Comando invalido
+``` 
