@@ -1,5 +1,5 @@
 ../Core/Src/USART_Com.c:22:6:RingBuffer_Write	24	static
 ../Core/Src/USART_Com.c:32:9:RingBuffer_Read	16	static
-../Core/Src/USART_Com.c:47:6:HAL_UART_RxCpltCallback	64	static
-../Core/Src/USART_Com.c:72:13:MX_USART2_UART_Init	8	static
-../Core/Src/USART_Com.c:90:6:Liga_Usart2	8	static
+../Core/Src/USART_Com.c:47:6:HAL_UART_RxCpltCallback	88	static
+../Core/Src/USART_Com.c:75:13:MX_USART2_UART_Init	8	static
+../Core/Src/USART_Com.c:93:6:Liga_Usart2	8	static

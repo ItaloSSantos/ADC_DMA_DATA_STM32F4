@@ -25,11 +25,7 @@ Comando válido:
 ```nginx
 LER_ADC
 ```
+Exemplo de resposta:
 ```makefile
-ADC0:1234,ADC1:5678
+ADC0:3.30V,ADC1:1.63V
 ```
-Comando Inválido:
-
-```nginx
-Comando invalido
-``` 

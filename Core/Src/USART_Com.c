@@ -49,13 +49,16 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
   if (huart->Instance == USART2)
   {
     // Verifica se recebeu o comando
-    if(strcmp(rxData, comando_adc) == 0) {
-        // Envia valores ADC já formatado
-        char response[32];
-        snprintf(response, sizeof(response), "ADC0:%d,ADC1:%d\r\n",
-                 adcBuffer[0], adcBuffer[1]);
-        HAL_UART_Transmit_IT(&huart2, (uint8_t*)response, strlen(response));
-    }
+	  if(strcmp(rxData, comando_adc) == 0) {
+	      uint32_t mV0 = ((uint32_t)adcBuffer[0] * 3300) / 4095;
+	      uint32_t mV1 = ((uint32_t)adcBuffer[1] * 3300) / 4095;
+
+	      char response[32];
+	      snprintf(response, sizeof(response), "ADC0:%lu.%02luV,ADC1:%lu.%02luV\r\n",
+	               mV0 / 1000, (mV0 % 1000) / 10,
+	               mV1 / 1000, (mV1 % 1000) / 10);
+	      HAL_UART_Transmit_IT(&huart2, (uint8_t*)response, strlen(response));
+	  }
     else {
         // retorna erro
         const char *error = "Comando invalido\r\n";
