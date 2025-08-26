@@ -60,7 +60,9 @@ void DMA1_Stream6_IRQHandler(void);
 void ADC_IRQHandler(void);
 void USART2_IRQHandler(void);
 void DMA2_Stream4_IRQHandler(void);
-/* USER CODE BEGIN EFP */
+uint32_t getMilis(void);
+void resetMilis(void);
+
 
 /* USER CODE END EFP */
 
