@@ -28,7 +28,7 @@ int main(void)
 
   while (1)
   {
-	  //HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adcBuffer, 2);
+
   }
 
 }
