@@ -14,3 +14,35 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64 D:\Projetos\ADCs_DMA\.
 
 !ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-08-25 10:03:34.570
 !MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2025-08-27 12:34:59.105 -----------------------------------------------
+eclipse.buildId=Version 1.19.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=pt_BR
+Framework arguments:  /home/italo/Área de trabalho/Projetos/ADCs_DMA/STM32F407VGTX_FLASH.ld
+Command-line arguments:  -os linux -ws gtk -arch x86_64 /home/italo/Área de trabalho/Projetos/ADCs_DMA/STM32F407VGTX_FLASH.ld
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-08-27 12:35:30.676
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-08-27 12:35:30.715
+!MESSAGE Log4j2 initialized with config file /media/italo/SOFT/Projetos/ADCs_DMA/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-08-27 12:35:41.412
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2025-08-27 12:37:55.595 -----------------------------------------------
+eclipse.buildId=Version 1.19.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=pt_BR
+Framework arguments:  /home/italo/Área de trabalho/Projetos/ADCs_DMA/STM32F407VGTX_FLASH.ld
+Command-line arguments:  -os linux -ws gtk -arch x86_64 /home/italo/Área de trabalho/Projetos/ADCs_DMA/STM32F407VGTX_FLASH.ld -data /home/italo/Área de trabalho/Projetos/ADCs_DMA
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-08-27 12:38:08.111
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-08-27 12:38:08.113
+!MESSAGE Log4j2 initialized with config file /media/italo/SOFT/Projetos/ADCs_DMA/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-08-27 12:38:16.940
+!MESSAGE Started RMI Server, listening on port 41337
