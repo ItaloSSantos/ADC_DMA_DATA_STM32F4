@@ -1,0 +1,85 @@
+#include "USART_Com.h"
+#include <string.h>
+#include <stdio.h>
+
+#define BUFFER_SIZE 64 // Define o tamanho do buffer ring
+
+const char comando_adc[] = "LER_ADC_"; // comando ADC
+#define RX_SIZE (sizeof(comando_adc) - 1)
+
+char rxData[RX_SIZE] = {0};  // variável para conversa pelo hyperterminal
+
+UART_HandleTypeDef huart2;  // struct de config da UART2
+
+typedef struct {
+    uint8_t buffer[BUFFER_SIZE];
+    volatile uint8_t head;
+    volatile uint8_t tail;
+} RingBuffer;
+
+void RingBuffer_Write(RingBuffer *rb, uint8_t data) {
+    uint16_t nextHead = (rb->head + 1) % BUFFER_SIZE;
+    if (nextHead == rb->tail) {
+        rb->tail = (rb->tail + 1) % BUFFER_SIZE;
+    }
+    rb->buffer[rb->head] = data;
+    rb->head = nextHead;
+}
+
+uint8_t RingBuffer_Read(RingBuffer *rb, uint8_t *data) {
+    if (rb->head == rb->tail) return 0;
+    *data = rb->buffer[rb->tail];
+    rb->tail = (rb->tail + 1) % BUFFER_SIZE;
+    return 1;
+}
+
+// Cria instância do RingBuffer
+RingBuffer rxBufferUart2 = { .head = 0, .tail = 0 };
+
+// Declarar adcBuffer
+extern uint16_t adcBuffer[2]; // ajuste conforme seu código ADC
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+
+	if (huart->Instance == USART2) {
+        // Compara o comando recebido
+        if (strncmp(rxData, comando_adc, RX_SIZE) == 0) {
+            uint32_t mV0 = ((uint32_t)adcBuffer[0] * 3300) / 4095;
+            uint32_t mV1 = ((uint32_t)adcBuffer[1] * 3300) / 4095;
+
+            char response[32];
+            snprintf(response, sizeof(response),
+                     "ADC0:%lu.%02luV,ADC1:%lu.%02luV\r\n",
+                     mV0 / 1000, (mV0 % 1000) / 10,
+                     mV1 / 1000, (mV1 % 1000) / 10);
+            HAL_UART_Transmit_IT(&huart2, (uint8_t*)response, strlen(response));
+        } else {
+            const char *error = "Comando invalido\r\n";
+            HAL_UART_Transmit_IT(&huart2, (uint8_t*)error, strlen(error));
+        }
+
+        // Limpa buffer e reinicia recepção
+        memset(rxData, 0, RX_SIZE);
+        HAL_UART_Receive_IT(&huart2, (uint8_t*)rxData, RX_SIZE);
+    }
+}
+
+static void MX_USART2_UART_Init(void) {
+    huart2.Instance = USART2;
+    huart2.Init.BaudRate = 115200;
+    huart2.Init.WordLength = UART_WORDLENGTH_8B;
+    huart2.Init.StopBits = UART_STOPBITS_1;
+    huart2.Init.Parity = UART_PARITY_NONE;
+    huart2.Init.Mode = UART_MODE_TX_RX;
+    huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+    huart2.Init.OverSampling = UART_OVERSAMPLING_16;
+
+    if (HAL_UART_Init(&huart2) != HAL_OK) {
+        Error_Handler();
+    }
+}
+
+void Liga_Usart2(void) {
+    MX_USART2_UART_Init();
+    HAL_UART_Receive_IT(&huart2, (uint8_t*)rxData, RX_SIZE);
+}
