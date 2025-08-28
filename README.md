@@ -20,6 +20,7 @@ Essas implementações são parte de um desenvolvimento de sistema para registro
 - ADC1 Ports PA0 e PA1; USART2 Ports PA2 e PA3; 
 
 ## Results : 
-![Detecção e Rastreamento](results/ppe_StrongSort.gif)
+![Terminal de comunicação](tela.jpg)
+
 
 
