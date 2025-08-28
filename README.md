@@ -20,7 +20,9 @@ Essas implementações são parte de um desenvolvimento de sistema para registro
 - ADC1 Ports PA0 e PA1; USART2 Ports PA2 e PA3; 
 
 ## Results : 
+Com um hyperterminal envia-se o comando LER_ADC para leitura dos valores ou outro camando será inválido.
 ![Terminal de comunicação](tela.jpg)
+
 
 
 
